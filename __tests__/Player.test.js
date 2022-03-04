@@ -61,3 +61,33 @@ test("subtracts from player's health", () => {
     player.reduceHealth(9999);
     expect(player.health).toBe(0);
 });
+
+test("gets player's attack values", () => {
+    const player = new Player('Dave');
+    player.strength = 10;
+
+    //don't check for random number bc it's too genericl so, give more specific values for quality feedback
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+});
+
+test('adds a potion to the inventory', () => {
+    const player = new Player('Dave');
+    const oldCounty = player.inventory.length;
+
+    player.addPotion(new Potion());
+
+    expect(player.inventory.length).toBeGreaterThan(oldCounty);
+});
+
+test('uses a potion from inventory', () => {
+    const player = new Player('Dave');
+    //3 diff types of potion
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    //make sure it doesn't go below zerio
+    const oldCounty = player.inventory.length;
+
+    player.usePotion(1);
+
+    expect(player.inventory.length).toBeLessThan(oldCounty);
+})
